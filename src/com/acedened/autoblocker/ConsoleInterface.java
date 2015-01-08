@@ -16,12 +16,14 @@ public class ConsoleInterface {
 
     public ConsoleInterface(String[] args) {
         getCommandLineArgs(args);
+        Process process = new Process(domainString, posts, momentary, new ConsoleOutput());
+        process.start();
     }
 
     //от id для групп предлагаю отказаться - много мароки, т.к. есть паблики, клубы и т.п. Тем более вряд ли кому в голову придёт указывать их вместо ссылки
     //в качестве домена лучше просить полную ссылку - народу удобней будет копировать
     private void getCommandLineArgs(String[] args) {
-        domain = new Option("d", "domain", true, "адрес группы (полный, например https://vk.com/ihateapple )");
+        domain = new Option("d", "domain", true, "адрес группы (полный (без http), например vk.com/ihateapple )");
         //groupId = new Option("g", "group-id", true, "ID группы (не адрес, для этого есть аргумент -d)");
         momentaryBlock =
                 new Option("m", "momentary", false,
@@ -45,15 +47,11 @@ public class ConsoleInterface {
             //group = Long.parseLong(cLine.getOptionValue('g', null));
             domainString = cLine.getOptionValue('d', null);
             posts = Integer.parseInt(cLine.getOptionValue('c'));
-            new Process(domainString, posts, momentary, new ConsoleOutput());
         } catch (ParseException e) {
             System.out.println("Ошибка аргументов: " + e.getLocalizedMessage());
             System.exit(-1);
         }
     }
-
-    private static final String EMAIL_REGEX =
-            "[\\w\\.\\-]{1,}@[\\w\\d]{1,10}(\\.[\\w\\d]{2,4}){1,}";
 
     public static void main(String[] args) {
         new ConsoleInterface(args);
