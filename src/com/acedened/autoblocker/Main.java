@@ -13,6 +13,7 @@ public class Main {
     long group;
     int posts;
     boolean momentary;
+    String domainString;
 
     public Main(String[] args) {
         getCommandLineArgs(args);
@@ -40,6 +41,9 @@ public class Main {
             }
             if (cLine.hasOption('m'))
                 momentary = true;
+            group = Long.parseLong(cLine.getOptionValue('g', null));
+            domainString = cLine.getOptionValue('d', null);
+            posts = Integer.parseInt(cLine.getOptionValue('c'));
         } catch (ParseException e) {
             System.out.println("Ошибка аргументов: " + e.getLocalizedMessage());
             System.exit(-1);
@@ -47,7 +51,7 @@ public class Main {
     }
 
     private static final String EMAIL_REGEX =
-            "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?";
+            "[\\w\\.\\-]{1,}@[\\w\\d]{1,10}(\\.[\\w\\d]{2,4}){1,}";
 
     public static void main(String[] args) {
         new Main(args);
