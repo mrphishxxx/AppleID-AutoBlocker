@@ -2,8 +2,6 @@ package com.acedened.autoblocker;
 
 import org.apache.commons.cli.*;
 
-import java.io.IOException;
-
 public class ConsoleInterface {
 
     Option domain;
@@ -22,13 +20,8 @@ public class ConsoleInterface {
         getCommandLineArgs(args);
         ConsoleOutput output = new ConsoleOutput();
         Process process = new Process(domainString, posts, momentary, site, output);
-        try {
-            process.start();
-        } catch (IOException e) {
-            output.error(e);
-            e.printStackTrace();
-            System.exit(0);
-        }
+        //process.start();
+
     }
 
     //от id для групп предлагаю отказаться - много мароки, т.к. есть паблики, клубы и т.п. Тем более вряд ли кому в голову придёт указывать их вместо ссылки
