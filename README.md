@@ -3,7 +3,7 @@
 
 ### Инструкции
 1. Убедитесь, что java стоит на вашем компе
-2. Скачайте jar этой программы
+2. Скачайте [jar](https://github.com/mrnovvad/AppleID-AutoBlocker/releases "jar") этой программы
 3. Запустите его через консоль ( http://bit.ly/kakZapustitJar )
 
 ### Необходимые параметры
