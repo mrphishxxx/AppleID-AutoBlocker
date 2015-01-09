@@ -10,7 +10,7 @@
 ######-d (адрес группы без http://, например vk.com/ihateapple)
     java -jar appleIdAutoBlocker.jar -d vk.com/ihateapple
     
-### Дополнительные параметры (необъязательные)
+### Дополнительные параметры (необязательные)
 ######-c (количество постов в группе, сканируемых на наличие apple id. По умолчанию все в группе) 
     java -jar appleIdAutoBlocker.jar -d vk.com/ihateapple -c 100
 ######-d (сайт с помощью которого осуществляется блокировка. По умолчанию untabe.ru/iD/iha.php)
