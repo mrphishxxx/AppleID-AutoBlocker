@@ -5,6 +5,7 @@ import com.acedened.vkutils.VKWall;
 import com.acedened.vkutils.WallFilter;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -19,6 +20,8 @@ public class Process {
     private Pattern pattern;
     private ArrayList<String> foundEmails;
     private EmailBlocker emailBlocker;
+    LinkedList<String> emails = new LinkedList<String>();
+
 
     private static final String EMAIL_REGEX =
             "[\\w\\.\\-]+@[\\w\\d]{1,10}(\\.[\\w\\d]{2,4})+";
@@ -33,6 +36,7 @@ public class Process {
         foundEmails = new ArrayList<String>();
         emailBlocker = new EmailBlocker();
         emailBlocker.out = out;
+        emailBlocker.emails = emails;
         emailBlocker.site = site;
     }
 
@@ -52,7 +56,7 @@ public class Process {
                     foundEmails.add(email);
                     out.foundAppleId(email);
                     if (momentaryBlock)
-                        emailBlocker.emails.add(email);
+                        emails.add(email);
                 }
             }
 
