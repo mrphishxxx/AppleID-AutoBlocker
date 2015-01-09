@@ -30,7 +30,7 @@ public class ConsoleInterface {
         domain = new Option("d", "domain", true, "адрес группы (полный (без http), например vk.com/ihateapple)");
         groupId = new Option("g", "group-id", true, "ID группы (не адрес, для этого есть аргумент -d)");
         momentaryBlock =
-                new Option("a", "after-scan", false,
+                new Option("a", "after-scan", true,
                         "пытаться блокировать Apple ID после сканирования (по умолчанию все Apple ID блокируются сразу после нахождения)");
         postsToScan = new Option("c", "count", true, "количество постов для сканирования");
         altSite = new Option("s", "site", true, "отправлять запросы на блокирование другому сайту (на случай, если главный упал)");
@@ -105,8 +105,9 @@ public class ConsoleInterface {
         }
 
         @Override
-        void siteOutput(String output) {
-            System.out.println(output);
+        void siteOutput(String output, String id) {
+            System.out.println(output + " (" + id + ")");
         }
+
     }
 }

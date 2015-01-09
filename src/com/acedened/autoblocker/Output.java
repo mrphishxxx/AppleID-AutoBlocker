@@ -16,6 +16,6 @@ public abstract class Output {
 
     abstract void ended(String listOfIds[]);
 
-    abstract void siteOutput(String output);
+    abstract void siteOutput(String output, String id);
 
 }
