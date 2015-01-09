@@ -2,38 +2,51 @@ package com.acedened.autoblocker;
 
 import org.apache.commons.cli.*;
 
+import java.io.IOException;
+
 public class ConsoleInterface {
 
     Option domain;
     //Option groupId;
     Option momentaryBlock;
     Option postsToScan;
+    Option altSite;
 
     //long group;
     int posts;
     boolean momentary = false;
     String domainString;
+    String site;
 
     public ConsoleInterface(String[] args) {
         getCommandLineArgs(args);
-        Process process = new Process(domainString, posts, momentary, new ConsoleOutput());
-        process.start();
+        ConsoleOutput output = new ConsoleOutput();
+        Process process = new Process(domainString, posts, momentary, site, output);
+        try {
+            process.start();
+        } catch (IOException e) {
+            output.error(e);
+            e.printStackTrace();
+            System.exit(0);
+        }
     }
 
     //от id для групп предлагаю отказаться - много мароки, т.к. есть паблики, клубы и т.п. Тем более вряд ли кому в голову придёт указывать их вместо ссылки
     //в качестве домена лучше просить полную ссылку - народу удобней будет копировать
     private void getCommandLineArgs(String[] args) {
-        domain = new Option("d", "domain", true, "адрес группы (полный (без http), например vk.com/ihateapple )");
+        domain = new Option("d", "domain", true, "адрес группы (полный (без http), например vk.com/ihateapple)");
         //groupId = new Option("g", "group-id", true, "ID группы (не адрес, для этого есть аргумент -d)");
         momentaryBlock =
                 new Option("m", "momentary", false,
                         "пытаться блокировать Apple ID сразу после его нахождения (по умолчанию все Apple ID блокируются после сканирования)");
         postsToScan = new Option("c", "count", true, "количество постов для сканирования");
+        altSite = new Option("s", "site", true, "отправлять запросы на блокирование другому сайту (на случай, если главный упал)");
         Options options = new Options();
         options.addOption(domain);
         //options.addOption(groupId);
         options.addOption(momentaryBlock);
         options.addOption(postsToScan);
+        options.addOption(altSite);
         try {
             CommandLine cLine = new GnuParser().parse(options, args);
             HelpFormatter formatter = new HelpFormatter();
@@ -44,9 +57,10 @@ public class ConsoleInterface {
             }
             if (cLine.hasOption('m'))
                 momentary = true;
+            site = cLine.getOptionValue('s', "untabe.ru/iD/iha.php");
             //group = Long.parseLong(cLine.getOptionValue('g', null));
             domainString = cLine.getOptionValue('d', null);
-            posts = Integer.parseInt(cLine.getOptionValue('c'));
+            posts = Integer.parseInt(cLine.getOptionValue('c', "0"));
         } catch (ParseException e) {
             System.out.println("Ошибка аргументов: " + e.getLocalizedMessage());
             System.exit(-1);
@@ -68,7 +82,7 @@ public class ConsoleInterface {
         @Override
         void error(Exception e) {
             System.out.println("Ошибка: " + e.getLocalizedMessage());
-
+            e.printStackTrace();
         }
 
         @Override
@@ -95,6 +109,11 @@ public class ConsoleInterface {
         void ended(String[] listOfIds) {
             //TODO: ввыводить обработанные акки если надо
             System.out.println("Закончил");
+        }
+
+        @Override
+        void siteOutput(String output) {
+            System.out.println(output);
         }
     }
 }

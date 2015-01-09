@@ -41,7 +41,7 @@ public class VKWall {
         if (response == null)
             throw new VKApiException((LinkedTreeMap) new Gson().fromJson(data, HashMap.class).get("error"));
         ArrayList<VKPost> posts = new ArrayList<VKPost>();
-        postsCount = (Integer) response.get(0);
+        postsCount = ((Double)response.get(0)).intValue();
         response.remove(0);
         for (Object postData : response) {
             LinkedTreeMap post = (LinkedTreeMap) postData;
