@@ -12,7 +12,7 @@ public class ConsoleInterface {
 
     long group;
     int posts;
-    boolean momentary = false;
+    boolean momentary = true;
     String domainString;
     String site;
 
@@ -30,8 +30,8 @@ public class ConsoleInterface {
         domain = new Option("d", "domain", true, "адрес группы (полный (без http), например vk.com/ihateapple)");
         groupId = new Option("g", "group-id", true, "ID группы (не адрес, для этого есть аргумент -d)");
         momentaryBlock =
-                new Option("m", "momentary", false,
-                        "пытаться блокировать Apple ID сразу после его нахождения (по умолчанию все Apple ID блокируются после сканирования)");
+                new Option("a", "after-scan", false,
+                        "пытаться блокировать Apple ID после сканирования (по умолчанию все Apple ID блокируются сразу после нахождения)");
         postsToScan = new Option("c", "count", true, "количество постов для сканирования");
         altSite = new Option("s", "site", true, "отправлять запросы на блокирование другому сайту (на случай, если главный упал)");
         Options options = new Options();
@@ -48,8 +48,8 @@ public class ConsoleInterface {
                 formatter.printHelp("Apple ID AutoBlocker", options);
                 System.exit(-1);
             }
-            if (cLine.hasOption('m'))
-                momentary = true;
+            if (cLine.hasOption('a'))
+                momentary = false;
             site = cLine.getOptionValue('s', "untabe.ru/iD/iha.php");
             group = -Long.parseLong(cLine.getOptionValue('g', "0"));
             domainString = cLine.getOptionValue('d', null);
