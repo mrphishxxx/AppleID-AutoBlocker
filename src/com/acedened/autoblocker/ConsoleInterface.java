@@ -5,12 +5,12 @@ import org.apache.commons.cli.*;
 public class ConsoleInterface {
 
     Option domain;
-    //Option groupId;
+    Option groupId;
     Option momentaryBlock;
     Option postsToScan;
     Option altSite;
 
-    //long group;
+    long group;
     int posts;
     boolean momentary = false;
     String domainString;
@@ -20,7 +20,7 @@ public class ConsoleInterface {
         getCommandLineArgs(args);
         ConsoleOutput output = new ConsoleOutput();
         Process process = new Process(domainString, posts, momentary, site, output);
-        //process.start();
+        process.start();
 
     }
 
@@ -28,7 +28,7 @@ public class ConsoleInterface {
     //в качестве домена лучше просить полную ссылку - народу удобней будет копировать
     private void getCommandLineArgs(String[] args) {
         domain = new Option("d", "domain", true, "адрес группы (полный (без http), например vk.com/ihateapple)");
-        //groupId = new Option("g", "group-id", true, "ID группы (не адрес, для этого есть аргумент -d)");
+        groupId = new Option("g", "group-id", true, "ID группы (не адрес, для этого есть аргумент -d)");
         momentaryBlock =
                 new Option("m", "momentary", false,
                         "пытаться блокировать Apple ID сразу после его нахождения (по умолчанию все Apple ID блокируются после сканирования)");
@@ -36,7 +36,7 @@ public class ConsoleInterface {
         altSite = new Option("s", "site", true, "отправлять запросы на блокирование другому сайту (на случай, если главный упал)");
         Options options = new Options();
         options.addOption(domain);
-        //options.addOption(groupId);
+        options.addOption(groupId);
         options.addOption(momentaryBlock);
         options.addOption(postsToScan);
         options.addOption(altSite);
@@ -51,7 +51,7 @@ public class ConsoleInterface {
             if (cLine.hasOption('m'))
                 momentary = true;
             site = cLine.getOptionValue('s', "untabe.ru/iD/iha.php");
-            //group = Long.parseLong(cLine.getOptionValue('g', null));
+            group = -Long.parseLong(cLine.getOptionValue('g', "0"));
             domainString = cLine.getOptionValue('d', null);
             posts = Integer.parseInt(cLine.getOptionValue('c', "0"));
         } catch (ParseException e) {

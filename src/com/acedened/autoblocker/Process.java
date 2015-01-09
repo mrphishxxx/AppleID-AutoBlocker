@@ -34,17 +34,16 @@ public class Process {
         emailBlocker = new EmailBlocker();
         emailBlocker.out = out;
         emailBlocker.site = site;
-        emailBlocker.start();
-        start();
     }
 
-    private void start() {
+    public void start() {
+        emailBlocker.start();
         int offset = 0;
         Matcher matcher;
         try {
+            ArrayList<VKPost> posts = wall.getPosts(offset, postsToScan, WallFilter.ALL);
             if (postsToScan > wall.getPostsCount())
                 postsToScan = wall.getPostsCount();
-            ArrayList<VKPost> posts = wall.getPosts(offset, postsToScan, WallFilter.ALL);
             out.connectedToGroup();
             for (VKPost post : posts) {
                 matcher = pattern.matcher(post.getText());
