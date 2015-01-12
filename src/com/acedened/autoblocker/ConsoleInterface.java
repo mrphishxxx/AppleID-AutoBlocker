@@ -50,7 +50,7 @@ public class ConsoleInterface {
             }
             if (cLine.hasOption('a'))
                 momentary = false;
-            site = cLine.getOptionValue('s', "untabe.ru/iD/iha.php");
+            site = cLine.getOptionValue('s', ""); //fill before building jar
             group = -Long.parseLong(cLine.getOptionValue('g', "0"));
             domainString = cLine.getOptionValue('d', null);
             posts = Integer.parseInt(cLine.getOptionValue('c', "0"));
